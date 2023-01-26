@@ -1,0 +1,6 @@
+evaluation_df['mfcc_mean'] = evaluation_df['mfcc'].apply(lambda x: np.mean(x))
+evaluation_df['mfcc_min'] = evaluation_df['mfcc'].apply(lambda x: np.min(x))
+evaluation_df['mfcc_max'] = evaluation_df['mfcc'].apply(lambda x: np.max(x))
+evaluation_df['mfcc_skew'] = evaluation_df['mfcc'].apply(lambda x: skew(x))
+evaluation_df['mfcc_kurtosis'] = evaluation_df['mfcc'].apply(lambda x: kurtosis(x))
+evaluation_df['mfcc_std'] = evaluation_df['mfcc'].apply(lambda x: np.std(x))
