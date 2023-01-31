@@ -2,20 +2,20 @@ import librosa
 import numpy as np
 import pandas as pd
 from scipy.stats import skew
+import sklearn
 
-def get_features(path):
-    data, sample_rate = librosa.core.load(path)
+def get_features(row):
 
-    # Trim the audio file
-    trimmed_data, index = librosa.effects.trim(data, top_db=20, frame_length=512, hop_length=256)
-    mfcc = librosa.feature.mfcc(trimmed_data, sr = sample_rate, n_mfcc=30)
-    zcr = librosa.feature.zero_crossing_rate(trimmed_data)[0]
-    rolloff = librosa.feature.spectral_rolloff(trimmed_data)[0]
-    spectral_centroid = librosa.feature.spectral_centroid(trimmed_data)[0]
-    spectral_contrast = librosa.feature.spectral_contrast(trimmed_data)[0]
-    spectral_bandwidth = librosa.feature.spectral_bandwidth(trimmed_data)[0]
-    full_duration = librosa.get_duration(y=data, sr=sample_rate)
-    trimed_duration = librosa.get_duration(y=trimmed_data, sr=sample_rate)
+    data = row['data']
+    sample_rate = row['sample_rate']
+
+    mfcc = librosa.feature.mfcc(y=data, sr = sample_rate, n_mfcc=30)
+    mfcc = sklearn.preprocessing.scale(mfcc, axis=1)
+    zcr = librosa.feature.zero_crossing_rate(y=data)[0]
+    rolloff = librosa.feature.spectral_rolloff(y=data)[0]
+    spectral_centroid = librosa.feature.spectral_centroid(y=data)[0]
+    spectral_contrast = librosa.feature.spectral_contrast(y=data)[0]
+    spectral_bandwidth = librosa.feature.spectral_bandwidth(y=data)[0]
 
     # Compute STFT & magnitude spectrogram
     # stft = librosa.stft(data)
@@ -29,4 +29,4 @@ def get_features(path):
     spectral_contrast_array = np.hstack((np.mean(spectral_contrast), np.std(spectral_contrast), skew(spectral_contrast), np.max(spectral_contrast), np.median(spectral_contrast), np.min(spectral_contrast)))
     spectral_bandwidth_array = np.hstack((np.mean(spectral_bandwidth), np.std(spectral_bandwidth), skew(spectral_bandwidth), np.max(spectral_bandwidth), np.median(spectral_bandwidth), np.max(spectral_bandwidth)))
     
-    return pd.Series(np.hstack((mfcc_array, zcr_array, rolloff_array, spectral_centroid_array, spectral_contrast_array, spectral_bandwidth_array,full_duration,trimed_duration)))
+    return pd.Series(np.hstack((mfcc_array, zcr_array, rolloff_array, spectral_centroid_array, spectral_contrast_array, spectral_bandwidth_array)))
