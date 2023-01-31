@@ -4,10 +4,7 @@ import pandas as pd
 from scipy.stats import skew
 import sklearn
 
-def get_features(row):
-
-    data = row['data']
-    sample_rate = row['sample_rate']
+def get_features(data,sample_rate):
 
     mfcc = librosa.feature.mfcc(y=data, sr = sample_rate, n_mfcc=30)
     mfcc = sklearn.preprocessing.scale(mfcc, axis=1)
