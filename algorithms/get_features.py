@@ -6,8 +6,8 @@ import sklearn
 
 def get_features(data,sample_rate):
 
-    mfcc = librosa.feature.mfcc(y=data, sr = sample_rate, n_mfcc=30)
-    mfcc = sklearn.preprocessing.scale(mfcc, axis=1)
+    mfcc = librosa.feature.mfcc(y=data, sr = sample_rate, n_mfcc=40)
+    # mfcc = sklearn.preprocessing.scale(mfcc, axis=1)
     zcr = librosa.feature.zero_crossing_rate(y=data)[0]
     rolloff = librosa.feature.spectral_rolloff(y=data)[0]
     spectral_centroid = librosa.feature.spectral_centroid(y=data)[0]
