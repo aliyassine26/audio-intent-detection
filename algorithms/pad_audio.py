@@ -7,6 +7,6 @@ def pad_audio(data,sample_rate,target_length):
 
     temp_series = pd.Series(dtype=float)
     temp_series.loc["data_pad"] = data_pad
-    temp_series.loc["duration_data"] = librosa.get_duration(y=data_pad, sr=sample_rate)
+    temp_series.loc["duration_pad"] = librosa.get_duration(y=data_pad, sr=sample_rate)
 
     return temp_series

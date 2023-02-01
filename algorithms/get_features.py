@@ -9,7 +9,7 @@ def get_features(data,sample_rate):
     mfcc = librosa.feature.mfcc(y=data, sr = sample_rate, n_mfcc=30)
     # mfcc = sklearn.preprocessing.scale(mfcc, axis=1)
 
-    spec = librosa.feature.melspectrogram(data, sr=sample_rate, n_mels=128, fmax=8000)
+    spec = librosa.feature.melspectrogram(y=data, sr=sample_rate, n_mels=128, fmax=8000)
 
     # use [0] to take first value since below functions return a tuple: (data, frequency)
     zcr = librosa.feature.zero_crossing_rate(y=data)[0]
