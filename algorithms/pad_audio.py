@@ -1,5 +1,4 @@
 import librosa
-import numpy as np
 import pandas as pd
 
 def pad_audio(data,sample_rate,target_length):
